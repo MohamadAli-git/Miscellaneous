@@ -1,0 +1,3 @@
+1. Create two 10x10 matrices and populate them with random value of 0 or 1.
+2. Apply coordinate-wise addition, XNOR, subtraction and multiplication using
+these matrices.
