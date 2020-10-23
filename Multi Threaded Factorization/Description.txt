@@ -1,0 +1,35 @@
+multi-threaded factorization 
+This task is to write a multi-threaded program called factorize that is able to factorize natural
+numbers concurrently. The program reads the numbers to be factorized from the standard input
+and writes the result to the standard output. Multiple numbers can be factorized concurrently using
+the thread pool pattern. The -t command line argument controls how many worker threads are
+created, i.e., the size of the thread pool. A sample invocation is shown below:
+$ cat <<_end_ | ./factorize -t 5
+> a 12
+> b 234
+> _end_
+a 12 = 2 2 3
+b 234 = 2 3 3 13
+Note that every number is prefixed with a tag that is used to match results to requests. The content
+of the tag is arbitrary but it is safe to assume it does not contain white space or control characters.
+Here is an example where the same number is factorized several times concurrently and the results
+appear in a different order on the standard output:
+$ cat <<_end_ | ./factorize -t 5
+> a 18446744
+> b 18446744
+> c 18446744
+> _end_
+c 18446744 = 2 2 2 349 6607
+a 18446744 = 2 2 2 349 6607
+b 18446744 = 2 2 2 349 6607
+Detailed requirements:
+  The program has to factorize numbers in the unsigned 64-bit integer number space correctly.
+  The program must use the thread pool pattern where a fixed number of threads are created
+to perform the factorization. The numbers are read from the standard input by the main
+thread and placed into a queue to be picked up by the worker threads. Factorization results
+are passed back to the main thread and they are written by the main thread to the standard
+output.
+  The program should exit once the end of the standard input has been reached and there are
+no busy threads anymore.
+  The program must follow the programming requirements stated on the course web page. In
+particular, it needs to handle all runtime error situations in an appropriate manner.
